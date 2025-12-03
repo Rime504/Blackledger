@@ -48,34 +48,43 @@ export default function Projects() {
   }
 
   return (
-    <div>
-      <h1 className="text-3xl font-bold mb-6">Projects</h1>
+    <div className="max-w-6xl mx-auto space-y-8">
+      <div className="flex items-baseline justify-between gap-4">
+        <div>
+          <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">
+            Projects
+          </h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Track work in motion across clients, status, and value.
+          </p>
+        </div>
+      </div>
 
       {/* FORM */}
-      <div className="bg-white p-6 rounded-xl shadow mb-8 grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="bg-card text-card-foreground rounded-xl shadow-sm border border-border mb-8 grid grid-cols-1 md:grid-cols-4 gap-4 p-6">
         <input
-          className="border p-2 rounded"
+          className="border border-input bg-background px-3 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-ring/60"
           placeholder="Client Name"
           value={client}
           onChange={(e) => setClient(e.target.value)}
         />
 
         <input
-          className="border p-2 rounded"
+          className="border border-input bg-background px-3 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-ring/60"
           placeholder="Project Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
 
         <input
-          className="border p-2 rounded"
+          className="border border-input bg-background px-3 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-ring/60"
           placeholder="Status"
           value={status}
           onChange={(e) => setStatus(e.target.value)}
         />
 
         <input
-          className="border p-2 rounded"
+          className="border border-input bg-background px-3 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-ring/60"
           placeholder="Amount ($)"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
@@ -83,35 +92,50 @@ export default function Projects() {
 
         <button
           onClick={addProject}
-          className="bg-black text-white px-4 py-2 rounded col-span-1 md:col-span-4"
+          className="bg-black text-white px-4 py-2 rounded-lg text-sm font-medium tracking-tight col-span-1 md:col-span-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
         >
           Add Project
         </button>
       </div>
 
       {/* LIST */}
-      <div className="bg-white rounded-xl shadow overflow-hidden">
-        <table className="w-full">
-          <thead className="bg-gray-100">
+      <div className="bg-card text-card-foreground rounded-xl shadow-sm border border-border overflow-hidden">
+        <table className="w-full border-collapse text-sm">
+          <thead className="bg-muted/60">
             <tr>
-              <th className="p-3 text-left">Client</th>
-              <th className="p-3 text-left">Project</th>
-              <th className="p-3 text-left">Status</th>
-              <th className="p-3 text-left">Amount</th>
-              <th className="p-3 text-right">Action</th>
+              <th className="px-4 py-3 text-left font-medium text-xs uppercase tracking-wide text-muted-foreground">
+                Client
+              </th>
+              <th className="px-4 py-3 text-left font-medium text-xs uppercase tracking-wide text-muted-foreground">
+                Project
+              </th>
+              <th className="px-4 py-3 text-left font-medium text-xs uppercase tracking-wide text-muted-foreground">
+                Status
+              </th>
+              <th className="px-4 py-3 text-left font-medium text-xs uppercase tracking-wide text-muted-foreground">
+                Amount
+              </th>
+              <th className="px-4 py-3 text-right font-medium text-xs uppercase tracking-wide text-muted-foreground">
+                Action
+              </th>
             </tr>
           </thead>
           <tbody>
             {projects.map((project) => (
-              <tr key={project.id} className="border-t">
-                <td className="p-3">{project.client}</td>
-                <td className="p-3">{project.name}</td>
-                <td className="p-3">{project.status}</td>
-                <td className="p-3">${project.amount}</td>
-                <td className="p-3 text-right">
+              <tr
+                key={project.id}
+                className="border-t border-border/60 even:bg-muted/40"
+              >
+                <td className="px-4 py-3 align-middle">{project.client}</td>
+                <td className="px-4 py-3 align-middle">{project.name}</td>
+                <td className="px-4 py-3 align-middle">{project.status}</td>
+                <td className="px-4 py-3 align-middle">
+                  ${Number(project.amount ?? 0).toLocaleString()}
+                </td>
+                <td className="px-4 py-3 text-right align-middle">
                   <button
                     onClick={() => deleteProject(project.id)}
-                    className="text-red-500"
+                    className="text-red-500 text-xs font-medium hover:text-red-600 transition-colors"
                   >
                     Delete
                   </button>
@@ -122,9 +146,14 @@ export default function Projects() {
         </table>
 
         {projects.length === 0 && (
-          <p className="p-4 text-gray-500 text-center">
-            No projects added yet.
-          </p>
+          <div className="py-10 flex flex-col items-center justify-center gap-2">
+            <div className="h-8 w-8 rounded-full border border-dashed border-muted-foreground/40 flex items-center justify-center text-xs text-muted-foreground">
+              ◦
+            </div>
+            <p className="text-sm text-muted-foreground">
+              No projects added yet. New work will appear in this table.
+            </p>
+          </div>
         )}
       </div>
     </div>

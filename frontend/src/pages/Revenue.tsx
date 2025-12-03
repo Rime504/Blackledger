@@ -27,38 +27,67 @@ export default function Revenue() {
   }, []);
 
   return (
-    <div>
-      <h1 className="text-3xl font-bold mb-8">Revenue</h1>
-
-      <div className="bg-white p-6 rounded-xl shadow mb-8 max-w-xl">
-        <p className="text-gray-500 mb-2">Total Revenue</p>
-        <h2 className="text-4xl font-bold">${total}</h2>
+    <div className="max-w-6xl mx-auto space-y-8">
+      <div className="flex items-baseline justify-between gap-4">
+        <div>
+          <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">
+            Revenue
+          </h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            High‑level view of the cash flowing through your projects.
+          </p>
+        </div>
       </div>
 
-      <div className="bg-white rounded-xl shadow overflow-hidden">
-        <table className="w-full">
-          <thead className="bg-gray-100">
+      <div className="bg-card text-card-foreground p-6 rounded-xl shadow-sm border border-border max-w-xl">
+        <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground mb-2">
+          Total Revenue
+        </p>
+        <h2 className="text-4xl font-semibold leading-none">
+          ${total.toLocaleString()}
+        </h2>
+      </div>
+
+      <div className="bg-card text-card-foreground rounded-xl shadow-sm border border-border overflow-hidden">
+        <table className="w-full border-collapse text-sm">
+          <thead className="bg-muted/60">
             <tr>
-              <th className="p-3 text-left">Client</th>
-              <th className="p-3 text-left">Project</th>
-              <th className="p-3 text-left">Amount</th>
+              <th className="px-4 py-3 text-left font-medium text-xs uppercase tracking-wide text-muted-foreground">
+                Client
+              </th>
+              <th className="px-4 py-3 text-left font-medium text-xs uppercase tracking-wide text-muted-foreground">
+                Project
+              </th>
+              <th className="px-4 py-3 text-left font-medium text-xs uppercase tracking-wide text-muted-foreground">
+                Amount
+              </th>
             </tr>
           </thead>
           <tbody>
             {projects.map((project) => (
-              <tr key={project.id} className="border-t">
-                <td className="p-3">{project.client}</td>
-                <td className="p-3">{project.name}</td>
-                <td className="p-3">${project.amount}</td>
+              <tr
+                key={project.id}
+                className="border-t border-border/60 even:bg-muted/40"
+              >
+                <td className="px-4 py-3 align-middle">{project.client}</td>
+                <td className="px-4 py-3 align-middle">{project.name}</td>
+                <td className="px-4 py-3 align-middle">
+                  ${Number(project.amount ?? 0).toLocaleString()}
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
 
         {projects.length === 0 && (
-          <p className="p-4 text-gray-500 text-center">
-            No revenue yet.
-          </p>
+          <div className="py-10 flex flex-col items-center justify-center gap-2">
+            <div className="h-8 w-8 rounded-full border border-dashed border-muted-foreground/40 flex items-center justify-center text-xs text-muted-foreground">
+              $
+            </div>
+            <p className="text-sm text-muted-foreground">
+              No revenue yet. As projects close, they’ll appear here.
+            </p>
+          </div>
         )}
       </div>
     </div>

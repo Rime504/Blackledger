@@ -26,26 +26,35 @@ export default function Invoices() {
   }
 
   return (
-    <div>
-      <h1 className="text-3xl font-bold mb-6">Invoice Generator</h1>
+    <div className="max-w-6xl mx-auto space-y-8">
+      <div className="flex items-baseline justify-between gap-4">
+        <div>
+          <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">
+            Invoice Generator
+          </h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Create clean, branded PDF invoices in a single click.
+          </p>
+        </div>
+      </div>
 
-      <div className="bg-white p-6 rounded-xl shadow max-w-xl">
+      <div className="bg-card text-card-foreground p-6 rounded-xl shadow-sm border border-border max-w-xl">
         <input
-          className="border p-2 rounded w-full mb-4"
+          className="border border-input bg-background px-3 py-2 rounded-lg w-full mb-4 text-sm focus:outline-none focus:ring-2 focus:ring-ring/60"
           placeholder="Client Name"
           value={client}
           onChange={(e) => setClient(e.target.value)}
         />
 
         <input
-          className="border p-2 rounded w-full mb-4"
+          className="border border-input bg-background px-3 py-2 rounded-lg w-full mb-4 text-sm focus:outline-none focus:ring-2 focus:ring-ring/60"
           placeholder="Project Name"
           value={project}
           onChange={(e) => setProject(e.target.value)}
         />
 
         <input
-          className="border p-2 rounded w-full mb-6"
+          className="border border-input bg-background px-3 py-2 rounded-lg w-full mb-6 text-sm focus:outline-none focus:ring-2 focus:ring-ring/60"
           placeholder="Amount ($)"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
@@ -53,7 +62,7 @@ export default function Invoices() {
 
         <button
           onClick={generateInvoice}
-          className="bg-black text-white px-6 py-2 rounded"
+          className="inline-flex items-center justify-center rounded-lg bg-black text-white px-6 py-2 text-sm font-medium tracking-tight shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
         >
           Generate PDF Invoice
         </button>
