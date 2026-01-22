@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { useAuth } from "../lib/Auth";
+import { useAuth } from "../lib/auth";
 
 const links = [
   { name: "Dashboard", path: "/" },

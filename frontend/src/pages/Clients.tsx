@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
-import { useAuth } from "../lib/Auth";
+import { useAuth } from "../lib/auth";
 
 type Client = {
   id: string;
@@ -16,59 +16,49 @@ export default function Clients() {
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
 
-  // ✅ FETCH FROM DATABASE
-  async function fetchClients() {
-    const { data, error } = await supabase
-      .from("clients")
-      .select("*")
-      .order("created_at", { ascending: false });
+  // 🔹 Fetch clients (user scoped)
+  useEffect(() => {
+    if (!user) return;
+
+    async function fetchClients() {
+      const { data, error } = await supabase
+        .from("clients")
+        .select("*")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false });
+
+      if (!error && data) setClients(data);
+    }
+
+    fetchClients();
+  }, [user]);
+
+  // 🔹 Add client
+  async function addClient() {
+    if (!name || !email || !company || !user) return;
+
+    const { data, error } = await supabase.from("clients").insert([
+      {
+        name,
+        email,
+        company,
+        user_id: user.id,
+      },
+    ]).select();
 
     if (!error && data) {
-      setClients(data);
-    } else {
-      console.error("Fetch error:", error);
-    }
-  }
-
-  async function addClient() {
-    if (!name || !email || !company) return;
-    if (!user) {
-      console.error("No user logged in");
-      return;
-    }
-  
-    const { data, error } = await supabase.from("clients").insert([
-      { 
-        name, 
-        email, 
-        company,
-        owner_id: user.id // ✅ Add user ID for RLS
-      },
-    ]);
-  
-    console.log("INSERT RESULT:", data);
-    console.log("INSERT ERROR:", error);
-  
-    if (!error) {
+      setClients((prev) => [data[0], ...prev]);
       setName("");
       setEmail("");
       setCompany("");
-      fetchClients();
-    } else {
-      console.error("Failed to add client:", error);
     }
   }
-  
 
-  // ✅ DELETE FROM DATABASE
+  // 🔹 Delete client
   async function deleteClient(id: string) {
     await supabase.from("clients").delete().eq("id", id);
-    fetchClients();
+    setClients((prev) => prev.filter((c) => c.id !== id));
   }
-
-  useEffect(() => {
-    fetchClients();
-  }, []);
 
   return (
     <div className="max-w-6xl mx-auto space-y-8">

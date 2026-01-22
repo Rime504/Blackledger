@@ -1,7 +1,7 @@
 // src/components/ProtectedRoute.tsx
 import type { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../lib/Auth";
+import { useAuth } from "../lib/auth";
 
 export default function ProtectedRoute({ children }: { children: ReactNode }) {
   const { loading, session } = useAuth();

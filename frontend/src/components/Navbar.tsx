@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { useAuth } from "../lib/Auth";
+import { useAuth } from "../lib/auth";
 
 const links = [
   { name: "Dashboard", path: "/" },
@@ -47,10 +47,9 @@ export default function Navbar() {
               to={link.path}
               onClick={() => setOpen(false)}
               className={({ isActive }) =>
-                `block rounded-md px-3 py-2 text-sm font-medium ${
-                  isActive
-                    ? "bg-primary text-primary-foreground"
-                    : "text-foreground/80 hover:bg-muted"
+                `block rounded-md px-3 py-2 text-sm font-medium ${isActive
+                  ? "bg-primary text-primary-foreground"
+                  : "text-foreground/80 hover:bg-muted"
                 }`
               }
             >
